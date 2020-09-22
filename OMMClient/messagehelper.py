@@ -3,7 +3,7 @@ from xml.dom.minidom import parseString
 
 
 def parse_message(messagedata):
-    xml_data = parseString(messagedata.rstrip(chr(0)))
+    xml_data = parseString(messagedata.rstrip('\0'))
     root = xml_data.documentElement
     name = root.tagName
     attributes = {}

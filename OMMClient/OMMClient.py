@@ -46,8 +46,8 @@ class OMMClient(Events):
         self._tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._tcp_socket.settimeout(10)
         self._ssl_socket = ssl.wrap_socket(self._tcp_socket)
-        self._send_q = queue.Queue()
-        self._recv_q = queue.Queue()
+        self._send_q = queue.Queue()  # should contains strings (not bytes)
+        self._recv_q = queue.Queue()  # should contains strings (not bytes)
         self._worker = Thread(target=self._work)
         self._worker.daemon = True
         self._dispatcher = Thread(target=self._dispatch)
@@ -525,7 +525,7 @@ class OMMClient(Events):
         while not self._terminate:
             if not self._send_q.empty():
                 item = self._send_q.get(block=False)
-                self._ssl_socket.send(item + chr(0))
+                self._ssl_socket.send(item.encode('utf8') + b'\0')
                 self._send_q.task_done()
             self._ssl_socket.settimeout(0.1)
             data = None
@@ -535,7 +535,7 @@ class OMMClient(Events):
                 if e.message == "The read operation timed out":
                     continue
             if data:
-                self._recv_q.put(data)
+                self._recv_q.put(data.decode('utf8'))
 
     def _dispatch(self):
         while not self._terminate:
