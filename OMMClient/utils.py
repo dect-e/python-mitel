@@ -11,6 +11,7 @@ def encrypt_pin(pin, modulus, exponent):
     crypted = rsa.encrypt(pin, pub_key=pub_key)
     return base64.b64encode(crypted)
 
+
 def convert_ipui(ipui):
     if len(ipui) is not 10:
         return False

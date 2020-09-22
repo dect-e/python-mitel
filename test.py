@@ -1,9 +1,10 @@
 from time import sleep
-from OMMClient import OMMClient,messagehelper
+from OMMClient import OMMClient, messagehelper
 from OMMClient.utils import convert_ipui
 from testconfig import *
 import os
 import signal
+
 
 def SubscriptionHandler(message, attributes, children):
     print("eventhandler: "+message)
@@ -26,9 +27,9 @@ print("SARI: "+test.get_sari())
 print("OMM: "+test.get_systemname())
 #print(test.set_user_pin(55,"1234"))
 test.get_device_state(12)
-i=0
-while i<2:
-    i +=1
+i = 0
+while i < 2:
+    i += 1
     sleep(0.5)
     test.ping()
 test.logout()

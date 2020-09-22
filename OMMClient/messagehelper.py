@@ -14,7 +14,7 @@ def parse_message(messagedata):
     child = root.firstChild
     child_num = 0
     while child is not None and child_num < 5000:
-        child_num +=1
+        child_num += 1
         childname = child.tagName
         children[childname] = {}
         for i in range(0, child.attributes.length):

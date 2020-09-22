@@ -268,7 +268,7 @@ class OMMClient(Events):
         else:
             return False
 
-    def get_device(self,  ppn):
+    def get_device(self, ppn):
         """ get device configuration data
 
         Args:
@@ -288,7 +288,7 @@ class OMMClient(Events):
         else:
             return None
 
-    def get_user(self,  uid):
+    def get_user(self, uid):
         """ get user configuration data
 
         Obtain the user profiles configuration data like sip-login ect. using the user id.
@@ -549,8 +549,8 @@ class OMMClient(Events):
                     message += attributes["seq"]
                 with self._eventlock:
                     if message in self._events:
-                            self._events[message]["response"] = item
-                            self._events[message]["event"].set()
+                        self._events[message]["response"] = item
+                        self._events[message]["event"].set()
 
     def logout(self):
         """ Logout from OMM
