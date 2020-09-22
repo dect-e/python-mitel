@@ -51,8 +51,8 @@ class OMMDevice:
     _changelock = Lock()
 
     def __init__(self, ommclient, attributes=None):
-        self.__dict__["_ommclient"] = ommclient
-        self.__dict__["_changes"] = {}
+        self._ommclient = ommclient
+        self._changes = {}
         if attributes is not None:
             self._init_from_attributes(attributes)
 
