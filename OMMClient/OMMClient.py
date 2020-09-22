@@ -1,13 +1,13 @@
 from threading import Thread, Event, Lock
-from OMUser import OMMUser
-from OMDevice import OMMDevice
+from .OMUser import OMMUser
+from .OMDevice import OMMDevice
 from time import sleep
 from events import Events
-from utils import *
-from messagehelper import *
+from .utils import *
+from .messagehelper import *
 import socket
 import ssl
-import Queue
+import queue
 
 
 # noinspection PyMissingConstructor
@@ -46,8 +46,8 @@ class OMMClient(Events):
         self._tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._tcp_socket.settimeout(10)
         self._ssl_socket = ssl.wrap_socket(self._tcp_socket)
-        self._send_q = Queue.Queue()
-        self._recv_q = Queue.Queue()
+        self._send_q = queue.Queue()
+        self._recv_q = queue.Queue()
         self._worker = Thread(target=self._work)
         self._worker.daemon = True
         self._dispatcher = Thread(target=self._dispatch)
@@ -531,7 +531,7 @@ class OMMClient(Events):
             data = None
             try:
                 data = self._ssl_socket.recv(65536)
-            except Exception, e:
+            except Exception as e:
                 if e.message == "The read operation timed out":
                     continue
             if data:

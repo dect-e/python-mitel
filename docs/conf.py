@@ -23,14 +23,14 @@ source_suffix = ['.rst', '.md']
 master_doc = 'index'
 
 # General information about the project.
-project = u'python-mitel'
-copyright = u'2017, thomasDOTwtf'
-author = u'thomasDOTwtf'
+project = 'python-mitel'
+copyright = '2017, thomasDOTwtf'
+author = 'thomasDOTwtf'
 
 # The short X.Y version.
-version = u'0.1'
+version = '0.1'
 # The full version, including alpha/beta/rc tags.
-release = u'0.1'
+release = '0.1'
 
 language = None
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']

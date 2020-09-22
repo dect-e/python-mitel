@@ -1,4 +1,4 @@
-from OMMClient import *
+from .OMMClient import *
 from threading import Lock
 
 
@@ -71,5 +71,5 @@ class OMMDevice:
             self.__dict__[key] = value
 
     def _init_from_attributes(self, attributes):
-        for key, val in attributes.items():
+        for key, val in list(attributes.items()):
             self.__dict__[key] = val

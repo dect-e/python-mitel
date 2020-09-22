@@ -1,4 +1,4 @@
-from OMMClient import *
+from .OMMClient import *
 from threading import Lock
 
 
@@ -106,12 +106,12 @@ class OMMUser:
             self.__dict__[key] = value
 
     def _init_from_attributes(self, attributes):
-        for key, val in attributes.items():
+        for key, val in list(attributes.items()):
             self.__dict__[key] = val
 
     def get_attributes(self):
         attributes = {}
-        for key, val in self.__dict__.items():
+        for key, val in list(self.__dict__.items()):
             if "_" in key:
                 attributes[key] = val
         return attributes
@@ -121,4 +121,4 @@ class OMMUser:
             return True
         with self._changelock:
             for change in self._changes:
-                print change
+                print(change)
