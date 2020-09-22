@@ -229,15 +229,19 @@ class OMMClient(Events):
             "WILDCARD": "Wildcard",
             "CONFIGURED": "Configured"
         }
+        messagedata = {}
+
         if mode is None or mode.upper() not in modes:
             return False
-        messagedata = {
-            "mode": modes[mode.upper()],
-        }
-        if mode is "Wildcard" and timeout is not None:
-            return False
-        else:
-            messagedata["timeout"] = timeout
+
+        messagedata["mode"] = modes[mode.upper()]
+
+        if mode.upper() == "WILDCARD":
+            if timeout is None:
+                return False
+            else:
+                messagedata["timeout"] = timeout
+
         self._sendrequest("SetDECTSubscriptionMode", messagedata)
         return True
 
