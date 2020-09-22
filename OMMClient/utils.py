@@ -13,7 +13,7 @@ def encrypt_pin(pin, modulus, exponent):
 
 
 def convert_ipui(ipui):
-    if len(ipui) is not 10:
+    if len(ipui) != 10:
         return False
     emcHex = ipui[:5]
     psnHex = ipui[-5:]
@@ -26,6 +26,6 @@ def convert_ipui(ipui):
         chksum += int(c) * m
         m += 1
     chkdgt = chksum % 11
-    if chkdgt is 10:
+    if chkdgt == 10:
         chkdgt = '*'
     return '%s%s%s' % (emc, psn, chkdgt)

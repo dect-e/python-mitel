@@ -98,7 +98,7 @@ class OMMUser:
         return self.__dict__[item]
 
     def __setattr__(self, key, value):
-        if key is "uid" and "uid" in self.__dict__:
+        if key == "uid" and "uid" in self.__dict__:
             raise Exception("Cannot change uid !")
         with self._changelock:
             self._changes[key] = value
@@ -116,8 +116,9 @@ class OMMUser:
         return attributes
 
     def commit(self):
-        if len(self._changes) == 0:
+        if not self._changes:
             return True
         with self._changelock:
             for change in self._changes:
                 print(change)
+            return True

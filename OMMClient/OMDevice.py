@@ -63,7 +63,7 @@ class OMMDevice:
         return self.__dict__[item.name]
 
     def __setattr__(self, key, value):
-        if key is "ppn" and "ppn" in self.__dict__:
+        if key == "ppn" and "ppn" in self.__dict__:
             raise Exception("Cannot change ppn !")
         with self._changelock:
             self._changes[key] = value
