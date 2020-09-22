@@ -1,4 +1,3 @@
-from .OMMClient import *
 from threading import Lock
 
 

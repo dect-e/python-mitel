@@ -3,8 +3,8 @@ from .OMUser import OMMUser
 from .OMDevice import OMMDevice
 from time import sleep
 from events import Events
-from .utils import *
-from .messagehelper import *
+from .utils import encrypt_pin
+from .messagehelper import construct_message, parse_message
 import socket
 import ssl
 import queue
