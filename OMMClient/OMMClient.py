@@ -531,9 +531,8 @@ class OMMClient(Events):
             data = None
             try:
                 data = self._ssl_socket.recv(65536)
-            except Exception as e:
-                if e.message == "The read operation timed out":
-                    continue
+            except socket.timeout:
+                continue
             if data:
                 self._recv_q.put(data.decode('utf8'))
 
