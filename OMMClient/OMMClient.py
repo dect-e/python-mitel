@@ -304,20 +304,25 @@ class OMMClient(Events):
             A generator that yields user records, one at a time.
         """
         MAX_RECORDS = 20  # maximum possible request size, according to the AXI documentation
-        message, attributes, children = self._sendrequest(
-            "GetPPUser",
-            {"seq": self._get_sequence(), "uid": start_uid, "maxRecords": MAX_RECORDS
-            })
-        if children is not None and "user" in children and children["user"]:
-            if isinstance(children['user'], list):
-                for child in children['user']:
-                    yield child
-                if len(children['user']) == MAX_RECORDS:
-                    # response was as large as it could be, so maybe there are more records
-                    last_uid = int(children['user'][-1]['uid'])
-                    yield from self.get_users(last_uid+1)
+        while True:
+            message, attributes, children = self._sendrequest(
+                "GetPPUser",
+                {"seq": self._get_sequence(), "uid": start_uid, "maxRecords": MAX_RECORDS
+                })
+            if children is None or "user" not in children or not children["user"]:
+                break
+
+            if not isinstance(children['user'], list):
+                children['user'] = [children['user']]
+
+            for child in children['user']:
+                yield child
+
+            if len(children['user']) == MAX_RECORDS:
+                # response was as large as it could be, so maybe there are more records
+                start_uid = int(children['user'][-1]['uid'])+1
             else:
-                yield children['user']
+                break
 
     def get_user(self, uid):
         """ get user configuration data
