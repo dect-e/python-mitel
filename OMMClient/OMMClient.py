@@ -367,6 +367,10 @@ class OMMClient(Events):
     def detach_user_device(self, uid, ppn):
         """ detaches an user profile from an existing device
 
+        This only works if the OMM login has been performed in OMM sync mode
+        (ommsync=True for this module's login() function), otherwise it will
+        fail and return False.
+
         .. note::
             You have to obtain the device id also named ppn and the users id named uid.
 
@@ -403,6 +407,10 @@ class OMMClient(Events):
 
     def attach_user_device(self, uid, ppn):
         """ Connects an existing user profile to an existing subscribed device
+
+        This only works if the OMM login has been performed in OMM sync mode
+        (ommsync=True for this module's login() function), otherwise it will
+        fail and return False.
 
         Args:
             uid (int): user profile id
