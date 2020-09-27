@@ -392,7 +392,6 @@ class OMMClient(Events):
             Will return a LastPPAction object if the AXI query was successful, None otherwise.
         """
         message, attributes, children = self._sendrequest("GetLastPPDevAction", {"seq": self._get_sequence(), "ppn": ppn})
-        print(message, attributes, children)
         if children is not None and "pp" in children and children["pp"]:
             action = LastPPAction(self, children["pp"])
             return action

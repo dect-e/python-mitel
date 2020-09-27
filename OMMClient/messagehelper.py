@@ -52,5 +52,4 @@ def construct_message(name, attributes=None, children=None):
                 for attr_key, attr_val in list(val.items()):
                     new_child.setAttribute(str(attr_key), str(attr_val))
             root_element.appendChild(new_child)
-    print(root_element.toxml())
     return root_element.toxml()
