@@ -1,7 +1,7 @@
 from threading import Lock
 
 
-class OMMDevice:
+class PPDev:
     """
     :type _ommclient: OMMClient
     :param _ommclient: OMM Client

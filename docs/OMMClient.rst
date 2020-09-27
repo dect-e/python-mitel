@@ -17,18 +17,18 @@ OMMClient\.OMMClient module
     :undoc-members:
     :show-inheritance:
 
-OMMClient\.OMMDevice module
+OMMClient\.types\.PPDev module
 ---------------------------
 
-.. automodule:: OMMClient.OMMDevice
+.. automodule:: OMMClient.types.PPDev
     :members:
     :undoc-members:
     :show-inheritance:
 
-OMMClient\.OMMUser module
+OMMClient\.types.PPUser module
 ---------------------------
 
-.. automodule:: OMMClient.OMMUser
+.. automodule:: OMMClient.types.PPUser
     :members:
     :undoc-members:
     :show-inheritance:

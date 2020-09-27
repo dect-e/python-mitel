@@ -1,6 +1,6 @@
 from threading import Thread, Event, Lock
-from .OMUser import OMMUser
-from .OMDevice import OMMDevice
+from OMMClient.types.PPUser import PPUser
+from OMMClient.types.PPDev import PPDev
 from time import sleep
 from events import Events
 from .utils import encrypt_pin
@@ -280,14 +280,14 @@ class OMMClient(Events):
             :type ppn: int
 
         Returns:
-            :rtype: OMMDevice
+            :rtype: PPDev
             :returns: Device object if successful None if not
 
         """
         message, attributes, children = self._sendrequest("GetPPDev", {"seq": self._get_sequence(), "ppn": ppn})
         if children is not None and "pp" in children and children["pp"] is not None \
                 and children["pp"]["ppn"] == str(ppn):
-            device = OMMDevice(self, children["pp"])
+            device = PPDev(self, children["pp"])
             return device
         else:
             return None
@@ -373,7 +373,7 @@ class OMMClient(Events):
         message, attributes, children = self._sendrequest("GetPPUser", {"seq": self._get_sequence(), "uid": uid})
         if children is not None and "user" in children and children["user"] is not None \
                 and children["user"]["uid"] == str(uid):
-            user = OMMUser(self, children["user"])
+            user = PPUser(self, children["user"])
             return user
         else:
             return None
@@ -594,7 +594,7 @@ class OMMClient(Events):
                                                           {"ppn": str(ppn), "seq": str(self._get_sequence())})
         if children is not None and "pp" in children and children["pp"] is not None \
                 and children["pp"]["ppn"] == str(ppn):
-            device = OMMDevice(self, children["pp"])
+            device = PPDev(self, children["pp"])
             return device
         else:
             return None
