@@ -11,16 +11,29 @@ def parse_message(messagedata):
     for i in range(0, root.attributes.length):
         item = root.attributes.item(i)
         attributes[item.name] = item.value
+
     child = root.firstChild
     child_num = 0
     while child is not None and child_num < 5000:
         child_num += 1
-        childname = child.tagName
-        children[childname] = {}
+
+        new_child = {}
         for i in range(0, child.attributes.length):
             item = child.attributes.item(i)
-            children[childname][item.name] = item.value
+            new_child[item.name] = item.value
+
+        childname = child.tagName
+        if childname in children:
+            # this is a multi-value attribute, i.e. a list
+            # if there is only one element at the moment, wrap it in a list so we can add more
+            if not isinstance(children[childname], list):
+                children[childname] = [children[childname]]
+            children[childname].append(new_child)
+        else:
+            children[childname] = new_child
+
         child = child.nextSibling
+
     return name, attributes, children
 
 
