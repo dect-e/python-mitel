@@ -316,7 +316,8 @@ class OMMClient(Events):
                 children['user'] = [children['user']]
 
             for child in children['user']:
-                yield child
+                user = PPUser(self, child)
+                yield user
 
             if len(children['user']) == MAX_RECORDS:
                 # response was as large as it could be, so maybe there are more records
@@ -339,7 +340,7 @@ class OMMClient(Events):
         for user in self.get_users(start_uid):
             matched = True
             for attr in search_attrs:
-                if user[attr] != search_attrs[attr]:
+                if user.__getattr__(attr) != search_attrs[attr]:
                     matched = False
             if matched:
                 yield user
