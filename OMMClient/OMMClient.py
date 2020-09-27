@@ -1,10 +1,8 @@
 from threading import Thread, Event, Lock
-from OMMClient.types.PPUser import PPUser
-from OMMClient.types.PPDev import PPDev
 from time import sleep
 from events import Events
 
-from .types.LastPPAction import LastPPAction
+from .types import LastPPAction, PPDev, PPUser
 from .utils import encrypt_pin
 from .messagehelper import construct_message, parse_message
 import socket
