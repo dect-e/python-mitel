@@ -324,6 +324,40 @@ class OMMClient(Events):
             else:
                 break
 
+    def find_users(self, search_attrs, start_uid=0):
+        """ get user data records that match a given set of attributes
+
+        Obtain all user profiles that have all attributes (exact keys and values) in `search_attrs`.
+
+        Args:
+            search_attrs (dict): one or multiple attributes that the user records need to match
+            start_uid (int): (optional) the lowest user profile id to fetch (fetches next higher one if the given is does not exist)
+
+        Returns:
+            A generator that yields user records, one at a time.
+        """
+        for user in self.get_users(start_uid):
+            matched = True
+            for attr in search_attrs:
+                if user[attr] != search_attrs[attr]:
+                    matched = False
+            if matched:
+                yield user
+
+    def find_user(self, search_attrs, start_uid=0):
+        """ get the first user data record that matches a given set of attributes
+
+        Obtains the first user profiles that has all attributes (exact keys and values) in `search_attrs`.
+
+        Args:
+            search_attrs (dict): one or multiple attributes that the user record needs to match
+            start_uid (int): (optional) the lowest user profile id to fetch (fetches next higher one if the given is does not exist)
+
+        Returns:
+            A user record (dict) if a match was found, None otherwise.
+        """
+        return next(self.find_users(search_attrs, start_uid), None)
+
     def get_user(self, uid):
         """ get user configuration data
 
