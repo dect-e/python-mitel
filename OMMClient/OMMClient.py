@@ -3,6 +3,8 @@ from OMMClient.types.PPUser import PPUser
 from OMMClient.types.PPDev import PPDev
 from time import sleep
 from events import Events
+
+from .types.LastPPAction import LastPPAction
 from .utils import encrypt_pin
 from .messagehelper import construct_message, parse_message
 import socket
@@ -376,6 +378,26 @@ class OMMClient(Events):
                 and children["user"]["uid"] == str(uid):
             user = PPUser(self, children["user"])
             return user
+        else:
+            return None
+
+    def get_last_pp_dev_action(self, ppn):
+        """ get last action of PP device
+
+        Obtain information about the last contact between the OMM and the given PP: What action was performed, and when.
+        The trType may be the string "None" if the OMM has not had contact with the PP since the last reboot.
+
+        Args:
+            ppn (int): id of the PP
+
+        Returns:
+            Will return a LastPPAction object if the AXI query was successful, None otherwise.
+        """
+        message, attributes, children = self._sendrequest("GetLastPPDevAction", {"seq": self._get_sequence(), "ppn": ppn})
+        print(message, attributes, children)
+        if children is not None and "pp" in children and children["pp"]:
+            action = LastPPAction(self, children["pp"])
+            return action
         else:
             return None
 
