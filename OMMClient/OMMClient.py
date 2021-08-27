@@ -292,6 +292,73 @@ class OMMClient(Events):
         else:
             return None
 
+    def get_devices(self, start_ppn=0):
+        """ get all device data records
+
+        Obtain all device profiles, one by one (only making as many queries as necessary).
+
+        Args:
+            start_ppn (int): the lowest PP (handheld device) id to fetch (fetches next higher one if the given is does not exist)
+
+        Returns:
+            A generator that yields device records, one at a time.
+        """
+        MAX_RECORDS = 20  # maximum possible request size, according to the AXI documentation
+        while True:
+            message, attributes, children = self._sendrequest(
+                "GetPPDev",
+                {"seq": self._get_sequence(), "ppn": start_ppn, "maxRecords": MAX_RECORDS
+                })
+            if children is None or "pp" not in children or not children["pp"]:
+                break
+
+            if not isinstance(children['pp'], list):
+                children['pp'] = [children['pp']]
+
+            for child in children['pp']:
+                device = PPDev(self, child)
+                yield device
+
+            if len(children['pp']) == MAX_RECORDS:
+                # response was as large as it could be, so maybe there are more records
+                start_ppn = int(children['pp'][-1]['ppn'])+1
+            else:
+                break
+
+    def find_devices(self, search_attrs, start_ppn=0):
+        """ get device data records that match a given set of attributes
+
+        Obtain all device profiles that have all attributes (exact keys and values) in `search_attrs`.
+
+        Args:
+            search_attrs (dict): one or multiple attributes that the user records need to match
+            start_ppn (int): (optional) the lowest PP (handheld device) id to fetch (fetches next higher one if the given is does not exist)
+
+        Returns:
+            A generator that yields device records, one at a time.
+        """
+        for device in self.get_devices(start_ppn):
+            matched = True
+            for attr in search_attrs:
+                if device.__getattr__(attr) != search_attrs[attr]:
+                    matched = False
+            if matched:
+                yield device
+
+    def find_device(self, search_attrs, start_ppn=0):
+        """ get the first device data record that matches a given set of attributes
+
+        Obtains the first device profile that has all attributes (exact keys and values) in `search_attrs`.
+
+        Args:
+            search_attrs (dict): one or multiple attributes that the user record needs to match
+            start_ppn (int): (optional) the lowest PP (handheld device) profile id to fetch (fetches next higher one if the given is does not exist)
+
+        Returns:
+            A device record (dict) if a match was found, None otherwise.
+        """
+        return next(self.find_devices(search_attrs, start_ppn), None)
+
     def get_users(self, start_uid=0):
         """ get all user data records
 

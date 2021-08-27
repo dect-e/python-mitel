@@ -60,7 +60,7 @@ class PPDev:
         return self.ipei
 
     def __getattr__(self, item):
-        return self.__dict__[item.name]
+        return self.__dict__[item]
 
     def __setattr__(self, key, value):
         if key == "ppn" and "ppn" in self.__dict__:
