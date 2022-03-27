@@ -1,5 +1,11 @@
 # python-mitel (Python API for Mitel SIP-DECT)
 
+## Status of this project
+
+This library was originally developed by Eventphone at https://github.com/eventphone/python-mitel.
+Eventphone has since moved to https://github.com/eventphone/mitel-api and stopped work on python-mitel.
+The fork at https://github.com/dect-e/python-mitel is maintained by a different team, and is being updated and extended as-needed (no guarantees there!).
+
 ## Overview and Purpose
 
 The Mitel SIP-DECT solution is a scalable IP-based multicell
@@ -12,8 +18,6 @@ client application called OMP connects to OMM using a custom xml-based
 protocol over an SSL-socket. The idea behind this Python Module is
 to reverse-engenieer that protocol to be able to script all changes
 inside the OMM.
-
-This library has been replaced by https://github.com/eventphone/mitel-api and is no longer actively maintained.
 
 ## Documentation
 [![Documentation Status](https://readthedocs.org/projects/python-mitel/badge/?version=latest)](http://python-mitel.readthedocs.io/en/latest/?badge=latest)
