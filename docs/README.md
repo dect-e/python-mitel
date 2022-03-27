@@ -2,8 +2,8 @@
 
 ## Status of this project
 
-This library was originally developed by Eventphone at https://github.com/eventphone/python-mitel.
-Eventphone has since moved to https://github.com/eventphone/mitel-api and stopped work on python-mitel.
+This library was originally developed by Eventphone at https://github.com/eventphone/python-mitel.  
+Eventphone has since moved to https://github.com/eventphone/mitel-api and stopped work on python-mitel.  
 The fork at https://github.com/dect-e/python-mitel is maintained by a different team, and is being updated and extended as-needed (no guarantees there!).
 
 ## Overview and Purpose
