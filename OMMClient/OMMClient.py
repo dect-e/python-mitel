@@ -45,7 +45,8 @@ class OMMClient(Events):
         self._port = port
         self._tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._tcp_socket.settimeout(10)
-        self._ssl_context = ssl.create_default_context()
+        self._ssl_context = ssl.SSLContext(protocol=ssl.PROTOCOL_TLSv1_2)
+        self._ssl_context.set_ciphers("AES256-GCM-SHA384")
         self._ssl_socket = self._ssl_context.wrap_socket(self._tcp_socket, server_hostname=self._host)
         self._send_q = queue.Queue()  # should contains strings (not bytes)
         self._recv_q = queue.Queue()  # should contains strings (not bytes)
