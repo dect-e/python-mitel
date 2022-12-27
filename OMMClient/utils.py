@@ -8,8 +8,8 @@ def encrypt_pin(pin, modulus, exponent):
     # Quote from https://stackoverflow.com/questions/2855326
     # Necessary for OMM to compare PIN of a user
     pub_key = rsa.PublicKey(int(modulus, 16), int(exponent, 16))
-    crypted = rsa.encrypt(pin, pub_key=pub_key)
-    return base64.b64encode(crypted)
+    crypted = rsa.encrypt(pin.encode('utf-8'), pub_key=pub_key)
+    return base64.b64encode(crypted).decode('utf-8')
 
 
 def convert_ipui(ipui):
