@@ -654,6 +654,18 @@ class OMMClient(Events):
             return children["user"]
         else:
             return None
+    
+    def delete_user(self, uid):
+        """ Delete a configured user (uid)
+
+        .. note:: This operation cannot be undone!
+
+        :param uid: user id of the user to be deleted (>0)
+        :type uid: int
+        :return: None
+        """
+        self._ensure_login()
+        self._sendrequest("DeletePPUser", {"uid": uid, "seq": str(self._get_sequence())})
 
     def delete_device(self, ppid):
         """ Delete a configured handset (pp)
