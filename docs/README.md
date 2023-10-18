@@ -66,6 +66,7 @@ came up with a vendor api documentation which can be found here:
 - Detach User from Device
 - Convert User-Device Relation to Fixed
 - Convert User-Device Relation to Dynamic
+- Delete User by ID
 
 ### Devices (Protable Parts)
 - Delete Device (PP)
